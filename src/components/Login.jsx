@@ -1,6 +1,10 @@
 export default function Login() {
+  function handleSubmit(event) {
+    event.preventDefault(); // Prevents the automatic trigger of HTML request to transfer the form data to the server (Happens when onClick prop is used on button)
+    console.log("Submitted");
+  }
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <h2>Login</h2>
 
       <div className="control-row">

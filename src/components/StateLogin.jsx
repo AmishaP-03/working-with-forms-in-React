@@ -1,17 +1,25 @@
-import { useRef } from "react";
+import { useState } from "react";
 
 export default function Login() {
-  const email = useRef();
-  const password = useRef();
+  /**
+   * Manage user inputs via state
+   */
+  const [enteredValues, setEnteredValues] = useState({
+    email: '',
+    password: ''
+  });
+
+  function handleInputChange(value, identifier) {
+    setEnteredValues((enteredValues) => ({
+      ...enteredValues,
+      [identifier]: value
+    }));
+  }
 
   function handleSubmit(event) {
     event.preventDefault(); // Prevents the automatic trigger of HTML request to transfer the form data to the server (Happens when onClick prop is used on button)
     console.log("Submitted");
-    const enteredEmail = email.current.value;
-    const enteredPassword = password.current.value;
-
-    // Resetting form data -> we'll have to directly manipulate the DOM (since refs are connected to DOM, which is not recommended)
-    // email.current.value = ''
+    console.log(enteredValues);
   }
 
   return (
@@ -24,8 +32,9 @@ export default function Login() {
           <input 
             id="email" 
             type="email" 
-            name="email"
-            ref={email}
+            name="email" 
+            onChange={(event) => handleInputChange(event.target.value, 'email')}
+            value={enteredValues.email}
           />
         </div>
 
@@ -35,7 +44,8 @@ export default function Login() {
             id="password"
             type="password"
             name="password" 
-            ref={password}
+            onChange={(event) => handleInputChange(event.target.value, 'password')}
+            value={enteredValues.password}
           />
         </div>
       </div>
